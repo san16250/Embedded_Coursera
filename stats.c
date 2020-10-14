@@ -23,6 +23,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "stats.h"
 
 /* Size of the Data Set */
@@ -38,10 +39,17 @@ void main() {
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
   /* Other Variable Declarations Go Here */
-  unsigned char x = 0;
+  unsigned char minimum = 0, maximum = 0, mean = 0, median = 0;
+  unsigned char * sorted;
   /* Statistics and Printing Functions Go Here */
-  x = find_mean(test, SIZE);
-  printf("The mean of the data set is: %u\n",x);
+  minimum = find_minimum(test, SIZE);
+  maximum = find_maximum(test, SIZE);
+  mean = find_mean(test, SIZE);
+  median = find_median(test,SIZE);
+  print_statistics(minimum, maximum, mean, median);
+  sorted = sort_array(test, SIZE);
+  printf("Sorted array: \n");
+  print_array(sorted, SIZE);
 
 }
 
@@ -58,25 +66,78 @@ unsigned char find_mean(unsigned char * ptr, unsigned int count){
 
 void print_statistics(unsigned char minimum, unsigned char maximum,
 		unsigned char mean, unsigned char median){
+	printf("The minimum value of the array is: %u\n", minimum);
+	printf("The maximum value of the array is: %u\n", maximum);
+	printf("The mean value of the array is: %u\n", mean);
+	printf("The median value of the array is: %u\n", median);
 
 }
 
-unsigned char print_array(unsigned char * ptr, unsigned int count){
-
+void print_array(unsigned char * ptr, unsigned int count){
+	int i = 0;
+	printf("[");
+	for(i = 0; i < count; i++){
+		printf("%u, ", *ptr);
+		ptr++;
+	}
+	printf("]\n");
 }
 
 unsigned char find_median(unsigned char * ptr, unsigned int count){
+	unsigned int i = 0, j = 0, temp = 0;
+	unsigned char median;
+	for(i = 0; i < count; i++){
+		for( j = i + 1; j < count; j++){
+			if(*(ptr + j) < *(ptr + i)){
+				temp = *(ptr + i);
+				*(ptr + i) = *(ptr + j);
+				*(ptr + j) = temp;
+			}
+		}
+	}
+	median = *(ptr + SIZE/2);
+	return median;
 
 }
 
 unsigned char find_maximum(unsigned char * ptr, unsigned int count){
-
+	unsigned char i= 0, maximum=1, temp=0;
+	for(i = 0; i < count; i++){
+		temp = *ptr;
+		ptr++;
+		if(maximum < temp){
+			maximum = temp;
+		}
+	}
+	return maximum;
 }
 
 unsigned char find_minimum(unsigned char *ptr, unsigned int count){
-
+	unsigned char i = 0, minimum = 255, temp = 0;
+	for (i = 0; i< count; i++){
+		temp = *ptr;
+		ptr++;
+		if(minimum > temp){
+			minimum = temp;
+		}
+	}
+	return minimum;
 }
 
-unsigned char sort_array(unsigned char *ptr, unsigned int count){
-
+unsigned char *sort_array(unsigned char *ptr, unsigned int count){
+	unsigned int i = 0, j = 0, temp = 0;
+	unsigned char *sorted = malloc(count);
+	for(i = 0; i < count; i++){
+		for( j = i + 1; j < count; j++){
+			if(*(ptr + j) < *(ptr + i)){
+				temp = *(ptr + i);
+				*(ptr + i) = *(ptr + j);
+				*(ptr + j) = temp;
+			}
+		}
+	}
+	for(i = 0; i <count; i++){
+		sorted[i] = *(ptr + i);
+	}
+	return sorted;
 }

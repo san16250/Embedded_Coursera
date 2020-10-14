@@ -50,7 +50,7 @@ void print_statistics(unsigned char minimum, unsigned char maximum,
  *
  * @return unsigned char x
  */
-unsigned char print_array(unsigned char * ptr, unsigned int count);
+void print_array(unsigned char * ptr, unsigned int count);
 
 /**
  * @brief function to find the median
@@ -63,7 +63,7 @@ unsigned char print_array(unsigned char * ptr, unsigned int count);
  *
  * @return unsigned char x
  */
-unsigned char median_mean(unsigned char * ptr, unsigned int count);
+unsigned char find_median(unsigned char * ptr, unsigned int count);
 
 /**
  * @brief function to find the mean of the array
@@ -113,7 +113,7 @@ unsigned char find_minimum(unsigned char * ptr, unsigned int count);
  *
  * @return unsigned char x
  */
-unsigned char sort_array(unsigned char * ptr, unsigned int count);
+unsigned char *sort_array(unsigned char * ptr, unsigned int count);
 
 
 #endif /* __STATS_H__ */
